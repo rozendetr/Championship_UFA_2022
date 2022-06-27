@@ -127,3 +127,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+/data/train/
+/weights/yolo_5L_trash_can_all_data_100epoch.onnx
+/configs/cfg_detection.yml
+/.idea/Championship_UFA_2022.iml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/vcs.xml
