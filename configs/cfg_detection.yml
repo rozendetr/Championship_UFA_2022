@@ -1,0 +1,15 @@
+model:
+  # path onnx weights of model
+  weights: "./weights/yolo_5L_trash_can_all_data_100epoch.onnx"
+  # Comma-separated string with model's input images' height and width
+  input_size: 640,640
+  # list names of detection class
+  class_names: ['trash_can']
+
+inference:
+  dir_img: "./data/train/0"
+  confidence_threshold: 0.3
+  iou_threshold: 0.3
+  create_xml: True
+
+

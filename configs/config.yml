@@ -1,0 +1,9 @@
+configs:
+  # path config for classification
+  cfg_classification: "./configs/cfg_classification.yml"
+  cfg_detection: "./configs/cfg_detection.yml"
+
+inference:
+  dir_img: "../test_dataset_test_2"
+
+

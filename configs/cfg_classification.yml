@@ -1,0 +1,21 @@
+model:
+  # path onnx weights of model
+  weights: "./weights/ResNet50_4_128_best_orig.onnx"
+  # Comma-separated string with model's input images' height and width
+  input_size: 128,128
+  # list names of classification class
+  class_names: ['good', "bad"]
+  # Mean values for r,g,b channels (be applying if is_gray = False)
+  img_mean_r: 121.22450319
+  img_mean_g: 113.15888359
+  img_mean_b: 110.76126834
+  # Std values for r,g,b channels
+  img_std_r: 64.79503432
+  img_std_g: 65.45959436
+  img_std_b: 66.49727735
+
+inference:
+  dir_img: "./data/train/0"
+  confidence_threshold: 0.7
+
+

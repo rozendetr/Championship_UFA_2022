@@ -8,7 +8,9 @@ import yaml
 from utils import *
 
 
-def predict_image(img, detector, conf_thresh=0.1, iou_thresh=0.3):
+def predict_detect_image(img, detector, cfg):
+    conf_thresh = cfg["inference"]["confidence_threshold"]
+    iou_thresh = cfg["inference"]["iou_threshold"]
     height, width = img.shape[:2]
     count_part_x = 1
     count_part_y = 1
@@ -39,7 +41,7 @@ def predict_image(img, detector, conf_thresh=0.1, iou_thresh=0.3):
     return np.vstack(detection), duration_inference_frame_det
 
 
-def predict_dir_images(cfg, detector):
+def predict_detect_dir_images(cfg, detector):
     # Loading parameters model from config
     weights = cfg["model"]["weights"]
     class_names = cfg["model"]["class_names"]
@@ -60,7 +62,7 @@ def predict_dir_images(cfg, detector):
     list_files = sorted(os.listdir(dir_img))
 
     df_predict = []
-    output_df = os.path.basename(os.path.normpath(dir_img)) + ".csv"
+    output_df = os.path.basename(os.path.normpath(dir_img)) + "_detect.csv"
     for id_img, img_name in enumerate(list_files):
         df_row = {}
         path_image = os.path.join(dir_img, img_name)
@@ -79,8 +81,7 @@ def predict_dir_images(cfg, detector):
         print(f"{id_img}/{len(list_files)}", path_image)
         img = cv2.imread(path_image)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        detections, duration_inference_frame_det = predict_image(img, detector, conf_thresh=conf_tresh,
-                                                                 iou_thresh=iou_thresh)
+        detections, duration_inference_frame_det = predict_detect_image(img, detector, cfg)
         l_duration_inference_frame_det.append(duration_inference_frame_det)
 
         # draw result
@@ -117,9 +118,9 @@ def predict_dir_images(cfg, detector):
                        boxes=detections[:, :4].tolist())
 
 
-        if (id_img % 100 == 0) or (id_img == (len(list_files))):
+        if (id_img % 100 == 0) or (id_img >= (len(list_files)-1)):
             print("save to csv", output_df)
             pd.DataFrame(df_predict).to_csv(output_df, index=False)
 
         # break
-    return l_duration_inference_frame_det
+    return output_df
